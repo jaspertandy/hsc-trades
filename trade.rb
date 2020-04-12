@@ -8,6 +8,10 @@ contents = File.readlines(file)
 found_names = false
 found_items = false
 cleaned_rows = []
+alias_names = {
+  "Ryan" => "R",
+  "Elliot" => "E",
+}
 
 NAME_NEEDLE = /Marty.*emmie/
 
@@ -38,6 +42,7 @@ count_wants = 0
 csv.each do |r|
   if r[0..1] == [nil, nil]
     names = r[2..].reject { |n| n.nil? }
+      .map { |n| alias_names[n].nil? ? n : alias_names[n] }
   else
     item = r[1]
     can_trade[item] = {}
